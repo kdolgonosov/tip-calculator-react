@@ -2,7 +2,6 @@ import InputText from './InputText';
 import ButtonToggle from './ButtonToggle';
 import ResultRow from './ResultRow';
 import Button from './Button';
-//import { SelecredTipContext } from './../contexts/SelectedTipContext';
 import { SelectedTipContext } from '../contexts/SelectedTipContext';
 import React from 'react';
 function App() {
@@ -33,10 +32,7 @@ function App() {
     const [tip, setTip] = React.useState('Custom');
     const [resTipForPerson, setResTipForPerson] = React.useState(0);
     const [resTotalForPerson, setResTotalForPerson] = React.useState(0);
-
     const [selectedTip, setSelectedTip] = React.useState('');
-    //
-    //
     function handleBillChange(e) {
         setBill(e.target.value);
     }
@@ -52,17 +48,12 @@ function App() {
         setNumberOfPeople('');
         setSelectedTip(null);
     }
-
     React.useEffect(() => {
         setResTipForPerson(((bill * parseInt(tip, 10)) / 100 / numberOfPeople).toFixed(2));
         setResTotalForPerson(
             ((bill * (100 + parseInt(tip, 10))) / 100 / numberOfPeople).toFixed(2)
         );
     }, [bill, numberOfPeople, tip]);
-    React.useEffect(() => {
-        setResTipForPerson(0);
-        setResTotalForPerson(0);
-    }, []);
 
     return (
         <SelectedTipContext.Provider value={selectedTip}>
@@ -93,7 +84,10 @@ function App() {
                                 title=""
                                 inputType="tip"
                                 onChange={handleTipChange}
-                                onFocus={() => setSelectedTip(null)}
+                                onFocus={() => {
+                                    setSelectedTip(null);
+                                    setTip('');
+                                }}
                                 value={tip}
                             />
                         </div>
